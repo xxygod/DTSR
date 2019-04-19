@@ -60,7 +60,11 @@ public class  HostAction extends BaseAction {
 
 	List<Temperature> temperatureList;
 
-	/** 测试代码 */
+	/**
+	 * 测试代码
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/test")
 	public Map<String, String> xc(HttpServletResponse response) {
