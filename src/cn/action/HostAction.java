@@ -180,7 +180,7 @@ public class  HostAction extends BaseAction {
 		HostChannelList.getChannelList().add(channel);
 		return "addChannel:1";
 	}
-	// 写入内存??????
+	// 写入内存??????   没看懂
 	/*
 	 * @ResponseBody
 	 * 
