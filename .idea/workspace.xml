@@ -6,8 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51f8f114-1cc6-4179-a320-413c0c1f2376" name="Default Changelist" comment="xiaoxiyi1">
-      <change beforePath="$PROJECT_DIR$/src/cn/action/HostAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/cn/action/HostAction.java" afterDir="false" />
+    <list default="true" id="51f8f114-1cc6-4179-a320-413c0c1f2376" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,8 +56,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/cn/action/HostAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="182" column="23" selection-start-line="182" selection-start-column="23" selection-end-line="182" selection-end-column="23" />
+            <state relative-caret-position="153">
+              <caret line="174" lean-forward="true" selection-start-line="174" selection-end-line="174" />
             </state>
           </provider>
         </entry>
@@ -115,6 +115,9 @@
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
   </component>
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="f5713009-c5c7-447e-87f6-0a22a73b2343" />
@@ -499,7 +502,7 @@
       <workItem from="1555504637206" duration="783000" />
       <workItem from="1555550476178" duration="4519000" />
       <workItem from="1555556283670" duration="6794000" />
-      <workItem from="1555637581888" duration="6241000" />
+      <workItem from="1555637581888" duration="7496000" />
     </task>
     <task id="LOCAL-00001" summary="xiaoxiyi">
       <created>1555663070085</created>
@@ -515,15 +518,21 @@
       <option name="project" value="LOCAL" />
       <updated>1555664130177</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="xiaoxiyi1">
+      <created>1555664549227</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1555664549227</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67438000" />
+    <option name="totallyTimeSpent" value="68693000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14552239" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -935,8 +944,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/cn/action/HostAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="182" column="23" selection-start-line="182" selection-start-column="23" selection-end-line="182" selection-end-column="23" />
+        <state relative-caret-position="153">
+          <caret line="174" lean-forward="true" selection-start-line="174" selection-end-line="174" />
         </state>
       </provider>
     </entry>
