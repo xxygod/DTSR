@@ -7,9 +7,13 @@
 	<!-- 根据登录用户名和密码查询用户信息 -->
 	<select id="existsUser" parameterType="User" resultType="User">
 		select
-		user_id userId,user_name userName,user_common_name
-		userCommonName,user_rank userRank from user where
-		user_name=#{userName} and user_pass=#{userPass}
+		user_id userId,
+		user_name userName,
+		user_common_name userCommonName,
+		user_rank userRank
+		from user
+		where user_name=#{userName}
+		and user_pass=#{userPass}
 	</select>
 
 	<!-- 根据用户名查用户数量 -->
@@ -26,38 +30,45 @@
 
 	<!-- 根据登录用户id查询用户信息 -->
 	<select id="getPersonalInfo" resultType="User">
-		select user_id
-		userId,user_name userName,user_sex userSex, user_pass
-		userPass,user_email userEmail from t_user where user_id=#{loginUserId}
+		select
+		user_id userId,
+		user_name userName,
+		user_sex userSex,
+		user_pass userPass,
+		user_email userEmail
+		from t_user
+		where user_id=#{loginUserId}
 	</select>
 
 	<!-- 根据id查询用户信息 -->
 	<select id="getUser" parameterType="User" resultType="User">
 		select
-		user_id userId,user_name userName,user_common_name userCommonName,
-		user_pass userPass,user_pic userPic,user_rank userRank
-		from user where user_id=#{userId}
+		user_id userId,
+		user_name userName,
+		user_common_name userCommonName,
+		user_pass userPass,
+		user_pic userPic,
+		user_rank userRank
+		from user
+		where user_id=#{userId}
 	</select>
 
 	<!-- 根据用户id修改user_coupons_unmber -->
 	<update id="setUser">
-		update user set
-		user_coupons_unmber=#{userCouponsUnmber} where
-		user_id=#{userId}
+		update user set user_coupons_unmber=#{userCouponsUnmber}
+		where user_id=#{userId}
 	</update>
 
 	<!-- 根据用户id修改密码 -->
 	<update id="setUserPass">
-		update user set
-		user_pass=#{userPass} where
-		user_id=#{userId}
+		update user set user_pass=#{userPass}
+		where user_id=#{userId}
 	</update>
 
 	<!-- 根据用户id修改用户头像 -->
 	<update id="setUserPic">
-		update user set
-		user_pic=#{userPic} where
-		user_id=#{userId}
+		update user set user_pic=#{userPic}
+		where user_id=#{userId}
 	</update>
 
 	<!-- 根据用户名查询用户名数量 -->
