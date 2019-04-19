@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 id:必须与对应接口的某个对应的方法名一致 -->
+<mapper namespace="cn.mapper.HostMapper">
+
+	<!-- 新增主机 -->
+	<insert id="addHost" parameterType="Host">
+		insert into
+		host(host_guid,user_id,host_name)
+		values(#{hostGuid},#{userId},#{hostName})
+	</insert>
+
+	<!-- 修改主机名称 -->
+	<update id="setHostName" parameterType="Host">
+		update host set
+		host_name=#{hostName}
+		where host_guid=#{hostGuid}
+	</update>
+
+	<!-- <insert id="addChannel" parameterType="Channel"> <selectKey resultType="java.lang.Integer" 
+		keyProperty="channelId" order="AFTER"> SELECT LAST_INSERT_ID() AS channel_id 
+		</selectKey> insert into Channel(host_guid,channel_name) values(#{hostGuid},#{channelName}) 
+		</insert> -->
+
+	<!-- 新增通道信息 -->
+	<insert id="addChannel" parameterType="Channel">
+		insert into
+		Channel(channel_id,host_guid,channel_name)
+		values(#{channelId},#{hostGuid},#{channelName})
+	</insert>
+
+	<!-- 根据通道id删除通道 -->
+	<delete id="deleteChannel" parameterType="Channel">
+		delete from Channel where channel_id=#{channelId}
+	</delete>
+
+	<!-- 根据通道id修改通道名字 -->
+	<update id="setChannelName" parameterType="Channel">
+		update channel set
+		channel_name=#{channelName}
+		where channel_id=#{channelId}
+	</update>
+
+	<!-- 查询主机信息，根据主机分区排升序 -->
+	<select id="getHostList" resultType="Host">
+		select host.host_guid as
+		hostGuid,host.user_id as userId,host.host_name as
+		hostName,host.host_code as hostCode
+		from host,host_partition
+		where
+		host.host_guid=host_partition.host_guid
+		order by host_partition.hp_code
+		asc
+	</select>
+
+	<!-- 查询所有通道信息 -->
+	<select id="getChannelList" resultType="Channel">
+		select channel_id as channelId,
+		host_guid as hostGuid,channel_name as channelName,
+		channel_code as channelCode
+		from channel
+	</select>
+
+	<!-- 根据通道id修改通道码 -->
+	<update id="setChannelCode" parameterType="Channel">
+		update channel set
+		channel_code=#{channelCode}
+		where channel_id=#{channelId}
+	</update>
+
+	<!-- 根据主机id查询通道id -->
+	<select id="getChannelidList" resultType="java.lang.Integer" parameterType="Host">
+		select channel_id from channel
+		where host_guid=#{hostGuid}
+	</select>
+
+
+	<sql id="temperatureList">
+		host_guid,channel_id,channel_name,tem_time,tem_original_length,tem_length,tem_str
+	</sql>
+
+	<!-- 插入温度记录 -->
+	<insert id="addTemperature" parameterType="list">
+		insert into temperature(
+		<include refid="temperatureList"></include>
+		)
+		values
+		<foreach collection="list" item="temperature" separator=",">
+			(#{temperature.hostGuid},#{temperature.channelId},#{temperature.channelName},#{temperature.temTime},#{temperature.temOriginalLength},#{temperature.temLength},#{temperature.temStr})
+		</foreach>
+	</insert>
+
+	<!-- 新增报警记录 -->
+	<insert id="addAlarmRecord" parameterType="AlarmRecord">
+		insert into
+		alarm_record(host_guid,channel_id,channel_name,ar_time,ar_position,ar_date,ar_type)
+		values(#{hostGuid},#{channelId},#{channelName},#{arTime},#{arPosition},#{arDate},#{arType})
+	</insert>
+
+	<!-- 根据条件查询报警记录 -->
+	<select id="getAlarmRecord" resultType="AlarmRecord" parameterType="Condition">
+		select ar_id as arId,
+			host_guid as hostGuid,
+			channel_name as channelName,
+			ar_time as arTime,
+			ar_position as arPosition,
+			ar_date as arDate,
+			ar_type as arType
+		from alarm_record
+		where
+			host_guid=#{hostGuid}
+		and
+			ar_time&gt;=#{beTime}
+		AND ar_time&lt;=#{reTime}
+		<if test="channelIdList.length>0">
+			and channel_id in
+			<foreach collection="channelIdList" item="cId" open="("
+				separator="," close=")">
+				#{cId}
+			</foreach>
+		</if>
+		<if test="arType.length>0">
+			and ar_type in
+			<foreach collection="arType" item="type" open="("
+				separator="," close=")">
+				#{type}
+			</foreach>
+		</if>
+	</select>
+
+<!-- 根据主机id和当前时间获取主机温度列表 -->
+	<select id="getHostTemperatureList" resultType="Temperature" parameterType="Host">
+		select
+		tem_id as temId,
+		host_Guid as hostGuid,
+		channel_id as channelId,
+		channel_name as channelName,
+		tem_time as temTime
+		from temperature
+		where host_guid=#{hostGuid}
+		and
+		to_days(tem_time) = to_days(now())
+	</select>
+
+	<!-- 获得主机温度 -->
+	<select id="getHostTemperature" resultType="Temperature"
+		parameterType="Temperature">
+		select
+		tem_id as temId,
+		host_Guid as hostGuid,
+		channel_id
+		as channelId,
+		channel_name
+		as channelName,
+		tem_original_length as
+		temOriginalLength,
+		tem_length as
+		temLength,
+		tem_str as temStr
+		from
+		temperature
+		where tem_id=#{temId}
+	</select>
+
+	<!-- 根据今天的时间和主机id获得报警记录 -->
+	<select id="getAlarmRecordToDay" resultType="AlarmRecord"
+		parameterType="Host">
+		select ar_id as arId,
+		host_guid as hostGuid,
+		channel_name
+		as
+		channelName,
+		ar_time as arTime,
+		ar_position as arPosition,
+		ar_date as
+		arDate,
+		ar_type as arType
+		from alarm_record
+		where
+		host_guid=#{hostGuid}
+		and
+		to_days(ar_time) = to_days(now())
+	</select>
+
+
+	<!-- 根据主机id删除温度记录 -->
+	<delete id="deleteTemperature" parameterType="host">
+		delete from
+		temperature where tem_time &lt; DATE_ADD(curdate(), INTERVAL -6 MONTH)
+		and host_guid=#{hostGuid}
+	</delete>
+
+	<!-- 根据条件获取主机时间温度温度列表 -->
+	<select id="getHostTimeTemperatureList" resultType="Temperature"
+		parameterType="Condition">
+		select
+		tem_id as temId,
+		host_Guid as hostGuid,
+		channel_id
+		as channelId,
+		channel_name
+		as channelName,
+		tem_time as temTime,
+		tem_str as
+		temStr
+		from
+		temperature
+		where host_guid=#{hostGuid} and
+		tem_time &gt;
+		DATE_ADD(#{beTime}, INTERVAL -1 Day) and
+		tem_time &lt;
+		DATE_ADD(#{beTime}, INTERVAL 0 Day)
+	</select>
+
+	<!-- 根据主机id获得机柜图 -->
+	<select id="getCabinetDiagram" resultType="CabinetDiagram"
+		parameterType="Host">
+		select
+		host_guid as hostGuid,
+		cd_src as cdSrc
+		from
+		cabinet_diagram
+		where
+		host_guid=#{hostGuid}
+	</select>
+</mapper>
